@@ -39,14 +39,14 @@ queue_t *q_new()
 void q_free(queue_t *q)
 {
     /* How about freeing the list elements and the strings? */
-  int ind = 0;
+  int ind;
   int qsize;
   list_ele_t *curr_elem;
   list_ele_t *next_elem;
   if (q != NULL)
   {
-    qsize = q->qsize;
-    while (ind < qsize)
+    qsize = q_size(q);
+    for (ind = 0; ind < qsize; ind++)
     {
       curr_elem = q->head;
       next_elem = curr_elem->next;
@@ -56,13 +56,11 @@ void q_free(queue_t *q)
       {
         break;
       }
-      // increment loop
-      ind++;
       q->head = next_elem;
     }
+    free(q);
   }
   /* Free queue structure */
-  free(q);
 }
 
 /*
@@ -78,8 +76,12 @@ bool q_insert_head(queue_t *q, char *s)
   char *new_str;
   size_t str_length;
   // if q is NULL or fail malloc, return false
+  if (q == NULL)
+  {
+    return false;
+  }
   newh = malloc(sizeof(list_ele_t));
-  if (q == NULL || newh == NULL)
+  if (newh == NULL)
   {
     return false;
   }
@@ -227,6 +229,15 @@ int q_size(queue_t *q)
  */
 void q_reverse(queue_t *q)
 {
-    /* You need to write the code for this function */
+  /*list_ele_t *prev_elem;
+  list_ele_t *curr_elem;
+  list_ele_t *next_elem;
+  list_ele_t *qhead;
+  list_ele_t *qtail;
+  if (q != NULL)
+  {
+    qhead = q->head;
+  }*/
+  return;
 }
 
