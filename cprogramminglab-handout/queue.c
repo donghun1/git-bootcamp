@@ -39,12 +39,27 @@ queue_t *q_new()
 void q_free(queue_t *q)
 {
     /* How about freeing the list elements and the strings? */
+  int ind = 0;
   int qsize;
   list_ele_t *curr_elem;
   list_ele_t *next_elem;
   if (q != NULL)
   {
     qsize = q->qsize;
+    while (ind < qsize)
+    {
+      curr_elem = q->head;
+      next_elem = curr_elem->next;
+      free(curr_elem->value); // free space malloced for value
+      free(curr->elem); // free pointer
+      if (next_elem == NULL)
+      {
+        break;
+      }
+      // increment loop
+      ind++;
+      q->head = next_elem;
+    }
   }
   /* Free queue structure */
   free(q);
@@ -60,12 +75,35 @@ void q_free(queue_t *q)
 bool q_insert_head(queue_t *q, char *s)
 {
     list_ele_t *newh;
-    /* What should you do if the q is NULL? */
+    char *new_str;
+    size_t str_length;
+    // if q is NULL or fail malloc, return false
     newh = malloc(sizeof(list_ele_t));
-    /* Don't forget to allocate space for the string and copy it */
-    /* What if either call to malloc returns NULL? */
+    if (q == NULL || newh == NULL)
+    {
+      return false;
+    }
+    str_length = strlen(s);
+    // allocate for size of string + NULL terminator
+    new_str = malloc(str_length + 1);
+    // fail allocation of string
+    if (new_str == NULL)
+    {
+      free(newh);
+      return false;
+    }
+    strcpy(new_str, s);
+    // edit list element
+    newh->value = new_str;
     newh->next = q->head;
+    // adjust queue head
     q->head = newh;
+    // account for adding to empty queue
+    if (q->tail == NULL)
+    {
+      q->tail = q->head;
+    }
+    q->qsize++;
     return true;
 }
 
