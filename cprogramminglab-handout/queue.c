@@ -24,15 +24,15 @@
 */
 queue_t *q_new()
 {
-    queue_t *q =  malloc(sizeof(queue_t));
-    /* What if malloc returned NULL? */ 
-    if (q != NULL)
-    {
-      q->qsize = 0;
-      q->head = NULL;
-      q->tail = NULL;
-    }
-    return q;
+  queue_t *q =  malloc(sizeof(queue_t));
+  /* What if malloc returned NULL? */ 
+  if (q != NULL)
+  {
+    q->qsize = 0;
+    q->head = NULL;
+    q->tail = NULL;
+  }
+  return q;
 }
 
 /* Free all storage used by queue */
@@ -74,37 +74,37 @@ void q_free(queue_t *q)
  */
 bool q_insert_head(queue_t *q, char *s)
 {
-    list_ele_t *newh;
-    char *new_str;
-    size_t str_length;
-    // if q is NULL or fail malloc, return false
-    newh = malloc(sizeof(list_ele_t));
-    if (q == NULL || newh == NULL)
-    {
-      return false;
-    }
-    str_length = strlen(s);
-    // allocate for size of string + NULL terminator
-    new_str = malloc(str_length + 1);
-    // fail allocation of string
-    if (new_str == NULL)
-    {
-      free(newh);
-      return false;
-    }
-    strcpy(new_str, s);
-    // edit list element
-    newh->value = new_str;
-    newh->next = q->head;
-    // adjust queue head
-    q->head = newh;
-    // account for adding to empty queue
-    if (q->tail == NULL)
-    {
-      q->tail = q->head;
-    }
-    q->qsize++;
-    return true;
+  list_ele_t *newh;
+  char *new_str;
+  size_t str_length;
+  // if q is NULL or fail malloc, return false
+  newh = malloc(sizeof(list_ele_t));
+  if (q == NULL || newh == NULL)
+  {
+    return false;
+  }
+  str_length = strlen(s);
+  // allocate for size of string + NULL terminator
+  new_str = malloc(str_length + 1);
+  // fail allocation of string
+  if (new_str == NULL)
+  {
+    free(newh);
+    return false;
+  }
+  strcpy(new_str, s);
+  // edit list element
+  newh->value = new_str;
+  newh->next = q->head;
+  // adjust queue head
+  q->head = newh;
+  // account for adding to empty queue
+  if (q->tail == NULL)
+  {
+    q->tail = q->head;
+  }
+  q->qsize++;
+  return true;
 }
 
 /*
@@ -116,9 +116,37 @@ bool q_insert_head(queue_t *q, char *s)
  */
 bool q_insert_tail(queue_t *q, char *s)
 {
-    /* You need to write the complete code for this function */
-    /* Remember: It should operate in O(1) time */
+  list_ele_t *newh;
+  char *new_str;
+  size_t str_length;
+  // if q is NULL or fail malloc, return false
+  newh = malloc(sizeof(list_ele_t));
+  if (q == NULL || newh == NULL)
+  {
     return false;
+  }
+  str_length = strlen(s);
+  // allocate for size of string + NULL terminator
+  new_str = malloc(str_length + 1);
+  // fail allocation of string
+  if (new_str == NULL)
+  {
+    free(newh);
+    return false;
+  }
+  strcpy(new_str, s);
+  // edit list element
+  newh->value = new_str;
+  newh->next = q->head;
+  // adjust queue head
+  q->tail = newh;
+  // account for adding to empty queue
+  if (q->head == NULL)
+  {
+    q->head = newh;
+  }
+  q->qsize++;
+  return true;
 }
 
 /*
@@ -131,9 +159,9 @@ bool q_insert_tail(queue_t *q, char *s)
 */
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
-    /* You need to fix up this code. */
-    q->head = q->head->next;
-    return true;
+  /* You need to fix up this code. */
+  q->head = q->head->next;
+  return true;
 }
 
 /*
