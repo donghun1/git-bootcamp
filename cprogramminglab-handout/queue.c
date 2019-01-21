@@ -51,7 +51,7 @@ void q_free(queue_t *q)
       curr_elem = q->head;
       next_elem = curr_elem->next;
       free(curr_elem->value); // free space malloced for value
-      free(curr->elem); // free pointer
+      free(curr_elem); // free pointer
       if (next_elem == NULL)
       {
         break;
@@ -159,8 +159,49 @@ bool q_insert_tail(queue_t *q, char *s)
 */
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
-  /* You need to fix up this code. */
-  q->head = q->head->next;
+  size_t str_length;
+  char *str_removed;
+  int qsize;
+  qsize = q_size(q); // returns 0 if q is NULL or qsize is 0
+  if (q ==  NULL || qsize == 0)
+  {
+    return false;
+  }
+  if (q->head == NULL)
+  {
+    return false;
+  }
+  str_removed = q->head->value;
+  // value exists
+  if (str_removed != NULL)
+  {
+    str_length = strlen(str_removed);
+    if (sp != NULL)
+    {
+      // string to be removed > sp size
+      if (str_length > (bufsize - 1))
+      {
+        str_length = bufsize - 1;
+      }
+      memset(sp, '\0', bufsize);
+      strncpy(sp, str_removed, str_length);
+    }
+    // free value of pointer
+    free(str_removed);
+  }
+  // update queue
+  q->qsize = q->qsize - 1; // qsize guaranteed to be at least 1
+  if (q->head->next != NULL)
+  {
+    q->head = q->head->next;
+  }
+  // if we removed last element of queue
+  if (qsize == 0)
+  {
+    q->head = NULL;
+    q->tail = NULL;
+  }
+  free(q->head);
   return true;
 }
 
