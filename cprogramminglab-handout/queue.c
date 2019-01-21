@@ -140,7 +140,11 @@ bool q_insert_tail(queue_t *q, char *s)
   // edit list element
   newh->value = new_str;
   newh->next = q->head;
-  // adjust queue head
+  // adjust queue tail
+  if (q->tail != NULL)
+  {
+    q->tail->next = newh;
+  }
   q->tail = newh;
   // account for adding to empty queue
   if (q->head == NULL)
@@ -229,15 +233,34 @@ int q_size(queue_t *q)
  */
 void q_reverse(queue_t *q)
 {
-  /*list_ele_t *prev_elem;
+  list_ele_t *prev_elem;
   list_ele_t *curr_elem;
   list_ele_t *next_elem;
-  list_ele_t *qhead;
-  list_ele_t *qtail;
+  list_ele_t *temp;
   if (q != NULL)
   {
-    qhead = q->head;
-  }*/
-  return;
+    curr_elem = q->head;
+    prev_elem = curr_elem;
+    next_elem = curr_elem;
+    // update pointers
+    while (curr_elem != NULL)
+    {
+      next_elem = curr_elem->next;
+      if (curr_elem != q->head)
+      {
+        curr_elem->next = prev_elem;
+      }
+      else
+      {
+        curr_elem->next = NULL;
+      }
+      prev_elem = curr_elem;
+      curr_elem = next_elem;
+    }
+    temp = q->head;
+    q->head = q->tail;
+    q->tail = temp;
+    return;
+  }
 }
 
