@@ -107,7 +107,6 @@ bool q_insert_head(queue_t *q, char *s)
     return true;
 }
 
-
 /*
   Attempt to insert element at tail of queue.
   Return true if successful.
@@ -143,9 +142,11 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
  */
 int q_size(queue_t *q)
 {
-    /* You need to write the code for this function */
-    /* Remember: It should operate in O(1) time */
+  if (q == NULL)
+  {
     return 0;
+  }
+  return q->qsize;
 }
 
 /*
