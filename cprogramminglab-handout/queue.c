@@ -122,11 +122,16 @@ bool q_insert_tail(queue_t *q, char *s)
   char *new_str;
   size_t str_length;
   // if q is NULL or fail malloc, return false
-  newh = malloc(sizeof(list_ele_t));
-  if (q == NULL || newh == NULL)
+  if (q == NULL)
   {
     return false;
   }
+  newh = malloc(sizeof(list_ele_t));
+  if (newh == NULL)
+  {
+    return false;
+  }
+
   str_length = strlen(s);
   // allocate for size of string + NULL terminator
   new_str = malloc(str_length + 1);
@@ -146,6 +151,7 @@ bool q_insert_tail(queue_t *q, char *s)
     q->tail->next = newh;
   }
   q->tail = newh;
+  q->tail->next = NULL;
   // account for adding to empty queue
   if (q->head == NULL)
   {
